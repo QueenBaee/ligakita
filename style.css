@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #09122C;
+  --primary: #BE3144;
+  --accent: #872341;
+  --highlight: #E17564;
+  --text: #ffffff;
+  --dim: #bbbbbb;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  padding: 1rem;
+  margin: 0;
+}
+
+h1, h2 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+input, button {
+  font-family: inherit;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--primary);
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  transition: 0.2s ease-in-out;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--highlight);
+}
+
+button:hover {
+  background-color: var(--accent);
+  border-color: var(--highlight);
+}
+
+button:active {
+  transform: scale(0.97);
+  background-color: var(--primary);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  color: var(--text);
+}
+
+th, td {
+  border: 1px solid var(--dim);
+  padding: 0.5rem;
+  text-align: center;
+}
+
+th {
+  background: var(--accent);
+  color: var(--text);
+}
+
+tr:hover td {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.matchday-title {
+  background-color: var(--accent);
+  color: var(--text);
+  text-align: left;
+  font-weight: bold;
+}
+.matchday-title td {
+  text-align: left;
+}
+
+.highlight {
+  background-color: transparent !important;
+}
+
+.winner {
+  color: var(--highlight);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.error {
+  color: #ff5555;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    display: none;
+  }
+
+  td {
+    position: relative;
+    padding-left: 50%;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid var(--dim);
+  }
+
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    font-weight: bold;
+    color: var(--highlight);
+  }
+
+  button {
+    width: 100%;
+  }
+
+  tr.matchday-title {
+    display: table-row;
+  }
+
+  .matchday-title td {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    background-color: var(--accent);
+    padding: 1rem;
+  }
+}

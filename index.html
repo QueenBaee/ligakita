@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LigaKita</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
+</head>
+<body>
+  <h1>LigaKita</h1>
+
+  <div id="setup">
+    <label>Jumlah Pemain:
+      <input type="number" id="jumlah" min="2" />
+    </label>
+    <button onclick="generateForm()">Input Nama Pemain</button>
+    <div id="form-nama"></div>
+    <div id="error" class="error"></div>
+    <button onclick="buatJadwal()">Buat Jadwal</button>
+  </div>
+
+  <div id="jadwal" style="display:none;">
+    <h2>Jadwal Pertandingan</h2>
+    <div class="responsive-table">
+      <table id="tabel-jadwal"></table>
+    </div>
+    <button onclick="shuffleJadwal()">Acak Ulang Jadwal</button>
+    <button onclick="mulaiPutaranKedua()">Putaran Kedua</button>
+  </div>
+
+  <div id="klasemen" style="display:none;">
+    <h2>Klasemen</h2>
+    <table id="tabel-klasemen">
+      <thead>
+        <tr><th>Nama</th><th>Menang</th><th>Win %</th><th>Histori</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button onclick="resetLiga()">Reset Liga</button>
+    <button onclick="simpanKeLocalStorage()">Simpan Liga</button>
+    <button onclick="hapusDataLiga()">Hapus Data</button>
+  </div>
+</body>
+</html>
