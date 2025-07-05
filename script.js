@@ -48,8 +48,27 @@ function generateForm() {
     container.innerHTML += `Nama Pemain ${i + 1}: <input type="text" id="pemain-${i}" /><br>`;
   }
 }
+function showModal(pesan, onConfirm) {
+  document.getElementById('modal-message').innerText = pesan;
+  document.getElementById('warning-modal').style.display = 'flex';
+  document.getElementById('lanjutkan-btn').onclick = function () {
+    tutupModal();
+    onConfirm();
+  };
+}
 
+function tutupModal() {
+  document.getElementById('warning-modal').style.display = 'none';
+}
 function buatJadwal() {
+  const jumlah = parseInt(document.getElementById('jumlah').value);
+  if (jumlah > 24) {
+    showModal(`⚠️ ${jumlah} pemain billiard? Bro, ini turnamen RT atau Piala Dunia? ${(jumlah * (jumlah - 1)) / 2} pertandingan? Servernya pun minta cuti.`, lanjutkanBikinJadwal);
+    return;
+  }
+  lanjutkanBikinJadwal();
+}
+function lanjutkanBikinJadwal() {
   pemain = [];
   hasil = [];
   menang = {};
@@ -87,6 +106,7 @@ function buatJadwal() {
   simpanKeLocalStorage();
 }
 
+
 function buatMatchdays(round = 1) {
   matchdays = matchdays.filter(md => md.round !== round);
   const pendingMatches = hasil.filter(h => h.round === round);
@@ -116,6 +136,10 @@ function buatMatchdays(round = 1) {
 function renderMatchdays() {
   const tabel = document.getElementById('tabel-jadwal');
   tabel.innerHTML = '';
+
+    const roundTertinggi = Math.max(...hasil.map(h => h.round));
+  document.querySelector('button[onclick="shuffleJadwal()"]').style.display =
+    roundTertinggi > 1 ? 'none' : 'inline-block';
 
   matchdays.forEach((md, index) => {
     tabel.innerHTML += `
@@ -233,27 +257,30 @@ function shuffleJadwal() {
   renderMatchdays();
 }
 
-function mulaiPutaranKedua() {
+function mulaiPutaranSelanjutnya() {
   if (!pemain.length) {
     alert("Belum ada data pemain.");
     return;
   }
 
-  if (!confirm("Mulai putaran kedua? Jadwal baru akan ditambahkan di bawah.")) return;
+  const roundKe = Math.max(...hasil.map(h => h.round)) + 1;
+
+  if (!confirm(`Mulai putaran ke-${roundKe}? Jadwal baru akan ditambahkan di bawah.`)) return;
 
   const hasilBaru = [];
   for (let i = 0; i < pemain.length; i++) {
     for (let j = i + 1; j < pemain.length; j++) {
-      hasilBaru.push({ a: pemain[i], b: pemain[j], pemenang: null, round: 2 });
+      hasilBaru.push({ a: pemain[i], b: pemain[j], pemenang: null, round: roundKe });
     }
   }
 
   shuffleArray(hasilBaru);
   hasil = hasil.concat(hasilBaru);
-  buatMatchdays(2);
+  buatMatchdays(roundKe);
   renderMatchdays();
   simpanKeLocalStorage();
 }
+
 
 function resetLiga() {
   if (confirm('Yakin ingin reset semua data?')) {
@@ -262,6 +289,32 @@ function resetLiga() {
     localStorage.removeItem("liga_menang");
     location.reload();
   }
+}
+function showModal(pesan, onLanjut) {
+  const modal = document.getElementById("peringatanModal");
+  const isi = document.getElementById("isiModal");
+  const lanjutBtn = document.getElementById("lanjutModalBtn");
+
+  isi.innerHTML = pesan;
+  modal.showModal();
+
+  // Hapus listener sebelumnya dulu
+  const newLanjut = lanjutBtn.cloneNode(true);
+  lanjutBtn.parentNode.replaceChild(newLanjut, lanjutBtn);
+
+  newLanjut.addEventListener("click", () => {
+    modal.close();
+    if (typeof onLanjut === "function") onLanjut();
+  });
+}
+
+function tutupModal() {
+  document.getElementById('warning-modal').style.display = 'none';
+}
+
+function lanjutkanJadwal() {
+  document.getElementById('warning-modal').style.display = 'none';
+  lanjutkanBikinJadwal(); // Ini akan dipanggil kalau user setuju
 }
 
 window.onload = muatDariLocalStorage;

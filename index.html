@@ -25,8 +25,8 @@
     <div class="responsive-table">
       <table id="tabel-jadwal"></table>
     </div>
+    <button onclick="mulaiPutaranSelanjutnya()">Putaran Selanjutnya</button>
     <button onclick="shuffleJadwal()">Acak Ulang Jadwal</button>
-    <button onclick="mulaiPutaranKedua()">Putaran Kedua</button>
   </div>
 
   <div id="klasemen" style="display:none;">
@@ -39,11 +39,20 @@
     </table>
     <button onclick="resetLiga()">Reset Liga</button>
     <button onclick="simpanKeLocalStorage()">Simpan Liga</button>
-    <button onclick="hapusDataLiga()">Hapus Data</button>
   </div>
   <footer style="text-align: center; padding: 1rem; color: var(--dim); font-size: 0.9rem;">
   Dibuat dengan 0.5% niat, 99.5% overthinking, dan AI yang diperbudak🤖💀<br>
   Dedicated to temen² yang ngeluh "STIKNYA GA ENAK NIH!" pas kalah 🥴@robbrobbery
 </footer>
+<dialog id="peringatanModal">
+  <form method="dialog">
+    <p id="isiModal"></p>
+    <menu>
+      <button value="cancel">Batal</button>
+      <button id="lanjutModalBtn">Lanjut</button>
+    </menu>
+  </form>
+</dialog>
+
 </body>
 </html>
